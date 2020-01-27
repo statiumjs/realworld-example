@@ -6,7 +6,7 @@ const LoadMask = ({ loading, size = '50px' }) => {
     return (
         <div className={`load-mask ${!loading ? 'hidden' : ''}`}>
             <div className="load-mask-inner">
-                <i className="fas fa-circle-notch fa-spin"
+                <i className="ion ion-load-c load-spinner"
                     style={{ fontSize: size }} />
             </div>
         </div>

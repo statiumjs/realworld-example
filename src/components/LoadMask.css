@@ -21,3 +21,17 @@
     position: relative;
     text-align: center;
 }
+
+.load-mask .load-mask-inner .load-spinner {
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(359deg);
+    }
+}
