@@ -7,19 +7,16 @@
 
 ### [Demo](https://github.com/gothinkster/realworld)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
 
+## Getting started
 
-This codebase was created to demonstrate a fully fledged fullstack application built with **React + Statium** including CRUD operations, authentication, routing, pagination, and more.
+(Live demo is coming shortly)
 
-We've gone to great lengths to adhere to the **React + Statium** community styleguides & best practices.
+To get the front end app running locally:
 
-For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
+* Clone this repository
+* Run `yarn install`
+* Run `yarn start`
 
-
-# How it works
-
-> Describe the general architecture of your app here
-
-# Getting started
-
-> npm install, npm start, etc.
+The local development web server will use port 4884 to avoid collisions with other
+dev environments possibly running on localhost.
 
