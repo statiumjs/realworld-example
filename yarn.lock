@@ -8704,7 +8704,7 @@ react-scripts@3.3.0:
   optionalDependencies:
     fsevents "2.1.2"
 
-react@^16.12.0, react@^16.9.0:
+react@^16.12.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
   integrity sha512-fglqy3k5E+81pA8s+7K0/T3DBCF0ZDOher1elBFzF7O6arXJgzyu/FW+COxFvAWXJoJN9KIZbT2LXlukwphYTA==
@@ -9622,10 +9622,10 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
-statium@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/statium/-/statium-0.2.2.tgz#7fce9d44650623d5fd13a295fe6f1e44afc56f61"
-  integrity sha512-q61H25enAscrnxpWol2I05RZ8NmHa1rVAhYvxIfislPMAfqBlWHFL339pO+oQc0pxV8tXI/sMz2Lh5uwI9xL8A==
+statium@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/statium/-/statium-0.2.3.tgz#ec56931845d40982617132dca540404fb2dd524e"
+  integrity sha512-duIl1vX7yHfkhxdAoe+VnFumLagIhw4SdS7oGAd8TzzY3U5JwbDOo7T6FuVaMr5dUebHtU8y+AFip0UEluCxjw==
   dependencies:
     core-js "^3.4.8"
     lodash.clone "^4.5.0"
@@ -9634,7 +9634,6 @@ statium@^0.2.2:
     lodash.has "^4.5.2"
     lodash.set "^4.3.2"
     lodash.upperfirst "^4.3.1"
-    react "^16.9.0"
 
 "statuses@>= 1.4.0 < 2", "statuses@>= 1.5.0 < 2", statuses@~1.5.0:
   version "1.5.0"
