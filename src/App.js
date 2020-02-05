@@ -20,48 +20,6 @@ const defaultState = {
     appReady: false,
 };
 
-const initialize = async ({ $set, $dispatch }) => {
-    const token = window.localStorage.getItem('jwtToken');
-    
-    if (token) {
-        try {
-            const api = getApi(token);
-            const user = await api.User.current();
-            
-            await $set({ api });
-            await $dispatch('setUser', user);
-            
-            // TODO Revert to this after protected key setting bug is fixed:
-            // https://github.com/riptano/statium/issues/8
-//             await $set({
-//                 api,
-//                 user,
-//             });
-        }
-        catch (e) {
-            // Token expired, etc. Default API is tokenless, so no need to set it again.
-            await $set({ user: null });
-        }
-    }
-    
-    // User was not logged in previously, or token has expired.
-    // Default state represents non-logged in experience so we are ready at this point.
-    await $set('appReady', true);
-};
-
-const setUser = async ({ $set }, user) => {
-    user = user || null;
-    
-    await $set({ user });
-    
-    if (user && user.token) {
-        window.localStorage.setItem('jwtToken', user.token);
-    }
-    else {
-        window.localStorage.removeItem('jwtToken');
-    }
-};
-
 const App = ({ history }) => (
     <ViewModel id="App"
         data={{ history }}
@@ -116,3 +74,45 @@ const App = ({ history }) => (
 );
 
 export default App;
+
+const initialize = async ({ $set, $dispatch }) => {
+    const token = window.localStorage.getItem('jwtToken');
+    
+    if (token) {
+        try {
+            const api = getApi(token);
+            const user = await api.User.current();
+            
+            await $set({ api });
+            await $dispatch('setUser', user);
+            
+            // TODO Revert to this after protected key setting bug is fixed:
+            // https://github.com/riptano/statium/issues/8
+//             await $set({
+//                 api,
+//                 user,
+//             });
+        }
+        catch (e) {
+            // Token expired, etc. Default API is tokenless, so no need to set it again.
+            await $set({ user: null });
+        }
+    }
+    
+    // User was not logged in previously, or token has expired.
+    // Default state represents non-logged in experience so we are ready at this point.
+    await $set('appReady', true);
+};
+
+const setUser = async ({ $set }, user) => {
+    user = user || null;
+    
+    await $set({ user });
+    
+    if (user && user.token) {
+        window.localStorage.setItem('jwtToken', user.token);
+    }
+    else {
+        window.localStorage.removeItem('jwtToken');
+    }
+};
