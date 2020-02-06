@@ -14,46 +14,6 @@ const defaultState = {
     password2: '',
 };
 
-const submit = async ({ $get, $set }) => {
-    try {
-        const [api, username, email, password] =
-            $get('api', 'username', 'email', 'password');
-        
-        const user = await api.User.register(username, email, password);
-        
-        await $set('user', user);
-        
-        const history = $get('history');
-        history.push('/');
-    }
-    catch (e) {
-        // TODO Handle errors
-    }
-};
-
-const validate = ({ password, password2, ...state }) => {
-    const errors = { ...state.errors };
-    
-    if (password !== '' && password.length < 3) {
-        // This is very arbitrary, just to showcase form validation
-        errors.password = 'Invalid password: should be longer than 3 characters!';
-    }
-    else {
-        delete errors.password;
-    }
-    
-    if (password2 !== '' && password2 !== password) {
-        errors.password2 = 'Passwords do not match!';
-    }
-    else {
-        delete errors.password2;
-    }
-    
-    return {
-        errors,
-    };
-};
-
 const Register = () => (
     <ViewModel id="Register"
         initialState={defaultState}
@@ -153,3 +113,43 @@ const Register = () => (
 );
 
 export default Register;
+
+const submit = async ({ $get, $set }) => {
+    try {
+        const [api, username, email, password] =
+            $get('api', 'username', 'email', 'password');
+        
+        const user = await api.User.register(username, email, password);
+        
+        await $set('user', user);
+        
+        const history = $get('history');
+        history.push('/');
+    }
+    catch (e) {
+        // TODO Handle errors
+    }
+};
+
+const validate = ({ password, password2, ...state }) => {
+    const errors = { ...state.errors };
+    
+    if (password !== '' && password.length < 3) {
+        // This is very arbitrary, just to showcase form validation
+        errors.password = 'Invalid password: should be longer than 3 characters!';
+    }
+    else {
+        delete errors.password;
+    }
+    
+    if (password2 !== '' && password2 !== password) {
+        errors.password2 = 'Passwords do not match!';
+    }
+    else {
+        delete errors.password2;
+    }
+    
+    return {
+        errors,
+    };
+};

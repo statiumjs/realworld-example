@@ -2,7 +2,9 @@ import React from 'react';
 import ViewModel, { Bind } from 'statium';
 import { Redirect } from 'react-router-dom';
 
-import LoadMask from './LoadMask.js';
+import LoadMask from '../LoadMask.js';
+
+import { initialize, submit, logout, validate } from './handlers.js';
 
 const defaultState = {
     busy: true,
@@ -14,6 +16,57 @@ const defaultState = {
     password2: '',
     errors: {},
 };
+
+const Settings = () => (
+    <ViewModel id="Settings"
+        initialState={defaultState}
+        applyState={validate}
+        controller={{
+            initialize,
+            handlers: {
+                submit,
+                logout,
+            },
+        }}>
+        <Bind props={["user", "busy"]} controller>
+            { ({ user, busy }, { $dispatch }) => (
+                <>
+                    { !user && <Redirect to="/login" /> }
+                
+                    <div className="settings-page">
+                        <div className="container page">
+                            <LoadMask loading={busy} />
+                        
+                            <div className="row">
+                                <div className="col-md-6 offset-md-3 col-xs-12">
+                                    <h1 className="text-xs-center">
+                                        Your Settings
+                                    </h1>
+                                
+                                    <SettingsForm />
+                                
+                                    <hr />
+                                
+                                    <button className="btn btn-outline-danger"
+                                        onClick={e => {
+                                            e.preventDefault();
+                                        
+                                            $dispatch('logout');
+                                        }}>
+                                    
+                                        Or click here to log out.
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
+        </Bind>
+    </ViewModel>
+);
+
+export default Settings;
 
 const SettingsForm = () => (
     <Bind controller
@@ -95,133 +148,3 @@ const SettingsForm = () => (
         )}
     </Bind>
 );
-
-const initialize = async ({ $get, $set }) => {
-    try {
-        let user = $get('user');
-        
-        await $set({
-            image: user.image || '',
-            username: user.username || '',
-            bio: user.bio || '',
-            email: user.email || '',
-            busy: false,
-        });
-    }
-    catch (e) {
-        // No-op for now
-    }
-};
-
-const submit = async ({ $get, $dispatch }) => {
-    try {
-        const [api, image, username, bio, email, password] =
-            $get('api', 'image', 'username', 'bio', 'email', 'password');
-        
-        const user = await api.User.save({
-            image,
-            username,
-            bio,
-            email,
-            password,
-        });
-        
-        // Update the user object upstream
-        await $dispatch('setUser', user);
-        
-        if (!user) {
-            const history = $get('history');
-            
-            history.push('/');
-        }
-    }
-    catch (e) {
-        console.log(e);
-        debugger;
-        // TODO Add error handling
-    }
-};
-
-const logout = async ({ $get, $dispatch }) => {
-    try {
-        // Reset the user object upstream. This will clean up the JWT token as well.
-        await $dispatch('setUser', null);
-    }
-    catch (e) {
-        // TODO Add error handling
-    }
-};
-
-const validate = ({ password, password2, ...values }) => {
-    const errors = { ...values.errors };
-    
-    if (password !== '' && password.length < 3) {
-        errors.password = 'Password should be longer than 3 characters';
-    }
-    else {
-        delete errors.password;
-    }
-    
-    if (password2 !== '' && password2 !== password) {
-        errors.password2 = 'Passwords do not match!';
-    }
-    else {
-        delete errors.password2;
-    }
-    
-    return {
-        ...values,
-        errors,
-    };
-};
-
-const Settings = () => (
-    <ViewModel id="Settings"
-        initialState={defaultState}
-        applyState={validate}
-        controller={{
-            initialize,
-            handlers: {
-                submit,
-                logout,
-            },
-        }}>
-        <Bind props={["user", "busy"]} controller>
-            { ({ user, busy }, { $dispatch }) => (
-                <>
-                    { !user && <Redirect to="/login" /> }
-                
-                    <div className="settings-page">
-                        <div className="container page">
-                            <LoadMask loading={busy} />
-                        
-                            <div className="row">
-                                <div className="col-md-6 offset-md-3 col-xs-12">
-                                    <h1 className="text-xs-center">
-                                        Your Settings
-                                    </h1>
-                                
-                                    <SettingsForm />
-                                
-                                    <hr />
-                                
-                                    <button className="btn btn-outline-danger"
-                                        onClick={e => {
-                                            e.preventDefault();
-                                        
-                                            $dispatch('logout');
-                                        }}>
-                                    
-                                        Or click here to log out.
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
-        </Bind>
-    </ViewModel>
-);
-
-export default Settings;

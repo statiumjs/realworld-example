@@ -5,22 +5,6 @@ import get from 'lodash.get';
 
 import Userpic from '../Userpic.js';
 
-const DeleteButton = ({ slug, commentId }) => (
-    <Bind controller>
-        { (_, { $dispatch }) => {
-            const deleteComment = () => {
-                $dispatch('deleteComment', { slug, commentId });
-            };
-    
-            return (
-                <span className="mod-options" onClick={deleteComment}>
-                    <i className="ion-trash-a" />
-                </span>
-            );
-        }}
-    </Bind>
-);
-
 const CommentView = ({ user, slug, articleAuthor, comment }) => {
     const currentUsername = get(user, 'username');
     const commentId = get(comment, 'id');
@@ -59,3 +43,19 @@ const CommentView = ({ user, slug, articleAuthor, comment }) => {
 };
 
 export default CommentView;
+
+const DeleteButton = ({ slug, commentId }) => (
+    <Bind controller>
+        { (_, { $dispatch }) => {
+            const deleteComment = () => {
+                $dispatch('deleteComment', { slug, commentId });
+            };
+    
+            return (
+                <span className="mod-options" onClick={deleteComment}>
+                    <i className="ion-trash-a" />
+                </span>
+            );
+        }}
+    </Bind>
+);

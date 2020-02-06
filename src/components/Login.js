@@ -5,6 +5,97 @@ import get from 'lodash.get';
 
 import './Login.css';
 
+const defaultState = {
+    email: '',
+    password: '',
+    inProgress: false,
+    errors: {},
+};
+
+const Login = ({ user }) => {
+    if (user) {
+        return <Redirect to="/" />;
+    }
+    
+    return (
+        <ViewModel id="Login"
+            initialState={defaultState}
+            applyState={validate}
+            controller={{
+                handlers: {
+                    login,
+                },
+            }}>
+            <div className="auth-page">
+                <div className="container page">
+                    <div className="row">
+                        <LoginForm />
+                    </div>
+                </div>
+            </div>
+        </ViewModel>
+    );
+};
+
+const LoginForm = () => (
+    <Bind props={[['email', true], ['password', true], 'errors', 'inProgress']} controller>
+        { ({ email, setEmail, password, setPassword, errors, inProgress }, { $dispatch }) => (
+            <div className="col-md-6 offset-md-3 col-xs-12">
+                <h1 className="text-xs-center">
+                    Sign In
+                </h1>
+                <p className="text-xs-center">
+                    <Link to="/register">
+                        Need an account?
+                    </Link>
+                </p>
+            
+                <ErrorList errors={errors} />
+            
+                <form onSubmit={e => {
+                        e.preventDefault();
+                    
+                        $dispatch('login', { email, password });
+                    }}>
+                    <fieldset>
+                        <fieldset className="form-group">
+                            <input
+                                className={inputCls('email', errors)}
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)} />
+                            
+                            <div className="invalid-feedback">
+                                {errors.email}
+                            </div>
+                        </fieldset>
+                    
+                        <fieldset className="form-group">
+                            <input className={inputCls('password', errors)}
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)} />
+                            
+                            <div className="invalid-feedback">
+                                {errors.password}
+                            </div>
+                        </fieldset>
+                    
+                        <button
+                            className="btn btn-lg btn-primary pull-xs-right"
+                            type="submit"
+                            disabled={inProgress || haveFieldErrors(errors)}>
+                            Sign In
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+        )}
+    </Bind>
+);
+
 const ErrorList = ({ errors }) => {
     if (!errors) {
         return null;
@@ -21,12 +112,7 @@ const ErrorList = ({ errors }) => {
     );
 };
 
-const initialState = {
-    email: '',
-    password: '',
-    inProgress: false,
-    errors: {},
-};
+export default withBindings('user')(Login);
 
 const emailRe = /^.+@.+$/;
 
@@ -87,90 +173,3 @@ const haveFieldErrors = errors => {
     
     return Object.keys(copy).length > 0;
 };
-
-const LoginForm = () => (
-    <Bind controller
-        props={[['email', true], ['password', true], 'errors', 'inProgress']}>
-        { ({ email, setEmail, password, setPassword, errors, inProgress }, { $dispatch }) => (
-            <div className="col-md-6 offset-md-3 col-xs-12">
-                <h1 className="text-xs-center">
-                    Sign In
-                </h1>
-                <p className="text-xs-center">
-                    <Link to="/register">
-                        Need an account?
-                    </Link>
-                </p>
-            
-                <ErrorList errors={errors} />
-            
-                <form onSubmit={e => {
-                        e.preventDefault();
-                    
-                        $dispatch('login', { email, password });
-                    }}>
-                    <fieldset>
-                        <fieldset className="form-group">
-                            <input
-                                className={inputCls('email', errors)}
-                                type="email"
-                                placeholder="Email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)} />
-                            
-                            <div className="invalid-feedback">
-                                {errors.email}
-                            </div>
-                        </fieldset>
-                    
-                        <fieldset className="form-group">
-                            <input className={inputCls('password', errors)}
-                                type="password"
-                                placeholder="Password"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)} />
-                            
-                            <div className="invalid-feedback">
-                                {errors.password}
-                            </div>
-                        </fieldset>
-                    
-                        <button
-                            className="btn btn-lg btn-primary pull-xs-right"
-                            type="submit"
-                            disabled={inProgress || haveFieldErrors(errors)}>
-                            Sign In
-                        </button>
-                    </fieldset>
-                </form>
-            </div>
-        )}
-    </Bind>
-);
-
-const Login = ({ user }) => {
-    if (user) {
-        return <Redirect to="/" />;
-    }
-    
-    return (
-        <ViewModel id="Login"
-            initialState={initialState}
-            applyState={validate}
-            controller={{
-                handlers: {
-                    login,
-                },
-            }}>
-            <div className="auth-page">
-                <div className="container page">
-                    <div className="row">
-                        <LoginForm />
-                    </div>
-                </div>
-            </div>
-        </ViewModel>
-    );
-};
-
-export default withBindings('user')(Login);

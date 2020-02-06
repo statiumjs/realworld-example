@@ -1,19 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Cell = ({ value, page, setPage }) => (
-    <li className={`page-item ${value === page ? 'active' : ''}`}>
-        <Link to="" className="page-link"
-            onClick={e => {
-                e.preventDefault();
-                setPage(value);
-            }}>
-            
-            {value + 1}
-        </Link>
-    </li>
-);
-
 const Pager = ({ articlesCount, limit, ...props }) => {
     if (articlesCount <= limit) {
         return null;
@@ -31,3 +18,16 @@ const Pager = ({ articlesCount, limit, ...props }) => {
 };
 
 export default Pager;
+
+const Cell = ({ value, page, setPage }) => (
+    <li className={`page-item ${value === page ? 'active' : ''}`}>
+        <Link to="" className="page-link"
+            onClick={e => {
+                e.preventDefault();
+                setPage(value);
+            }}>
+            
+            {value + 1}
+        </Link>
+    </li>
+);

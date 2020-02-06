@@ -5,75 +5,27 @@ import LoadMask from '../LoadMask.js';
 import { Form, Input, SubmitButton } from '../Form.js';
 import TagInput from './TagInput.js';
 
+import { loadArticle, postArticle } from './handlers.js';
+
+const Editor = props => (
+    <div className="editor-page">
+        <div className="container page">
+            <div className="row">
+                <div className="col-md-10 offset-md-1 col-xs-12">
+                    <EditorForm {...props} />
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+export default Editor;
+
 const defaultState = {
     loading: true,
     error: null,
     slug: null,
     article: null,
-};
-
-const emptyArticle = {
-    title: '',
-    description: '',
-    body: '',
-    tagList: [],
-};
-
-const loadArticle = async ({ $get, $set }, { match }) => {
-    const { slug } = match.params;
-    
-    if (slug) {
-        try {
-            const api = $get('api');
-            
-            await $set('loading', true);
-        
-            const article = await api.Articles.get(slug);
-            
-            await $set({
-                slug,
-                article,
-                error: null,
-                loading: false,
-            });
-        }
-        catch (e) {
-            await $set({
-                error: e.toString(),
-                loading: false,
-            });
-        }
-    }
-    else {
-        $set({
-            article: emptyArticle,
-            loading: false,
-        });
-    }
-};
-
-const postArticle = async ({ $get, $set }, article) => {
-    const api = $get('api');
-    let slug = $get('slug');
-    const apiFn = slug ? api.Articles.update : api.Articles.create;
-    
-    await $set('loading', true);
-    
-    try {
-        const updated = await apiFn(slug, article);
-        slug = updated.slug;
-        delete updated.slug;
-        
-        await $set({
-            slug,
-            article: updated,
-        });
-    }
-    catch (e) {
-        await $set('error', e.toString());
-    }
-    
-    await $set('loading', false);
 };
 
 const EditorForm = props => (
@@ -144,18 +96,3 @@ const EditorForm = props => (
         </Bind>
     </ViewModel>
 );
-
-
-const Editor = props => (
-    <div className="editor-page">
-        <div className="container page">
-            <div className="row">
-                <div className="col-md-10 offset-md-1 col-xs-12">
-                    <EditorForm {...props} />
-                </div>
-            </div>
-        </div>
-    </div>
-);
-
-export default Editor;

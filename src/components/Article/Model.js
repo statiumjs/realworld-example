@@ -1,6 +1,30 @@
 import React from 'react';
 import ViewModel from 'statium';
 
+const ArticleModel = ({ article, children, ...props }) => {
+    const controller = props.controller || {};
+    const handlers = controller.handlers;
+    
+    controller.handlers = {
+        ...handlers,
+        favorite,
+        unfavorite,
+    };
+    
+    return (
+        <ViewModel initialState={{ article }}
+            formulas={{
+                canModify,
+            }}
+            controller={controller}
+            {...props}>
+            { children }
+        </ViewModel>
+    );
+};
+
+export default ArticleModel;
+
 const canModify = $get => {
     const currentUser = $get('user.username');
     const articleUser = $get('article.author.username');
@@ -30,27 +54,3 @@ const doFavors = async (type, { $get, $set }, slug) => {
 
 const favorite = (...args) => doFavors('favorite', ...args);
 const unfavorite = (...args) => doFavors('unfavorite', ...args);
-
-const ArticleModel = ({ article, children, ...props }) => {
-    const controller = props.controller || {};
-    const handlers = controller.handlers;
-    
-    controller.handlers = {
-        ...handlers,
-        favorite,
-        unfavorite,
-    };
-    
-    return (
-        <ViewModel initialState={{ article }}
-            formulas={{
-                canModify,
-            }}
-            controller={controller}
-            {...props}>
-            { children }
-        </ViewModel>
-    );
-};
-
-export default ArticleModel;

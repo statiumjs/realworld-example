@@ -5,6 +5,33 @@ import { Bind, withBindings } from 'statium';
 import Userpic from '../Userpic.js';
 import FavIcon from './FavIcon.js';
 
+const Meta = ({ authorUsername, authorImage, createdAt, canModify }) => (
+    <div className="article-meta">
+        <Link to={`/@${authorUsername}`}>
+            <Userpic src={authorImage} alt={authorUsername} />
+        </Link>
+    
+        <div className="info">
+            <Link to={`/@${authorUsername}`} className="author">
+                {authorUsername}
+            </Link>
+            
+            <span className="date">
+                {new Date(createdAt).toDateString()}
+            </span>
+        </div>
+        
+        <Actions canModify={canModify} />
+    </div>
+);
+
+export default withBindings({
+    canModify: 'canModify',
+    authorUsername: 'article.author.username',
+    authorImage: 'article.author.image',
+    createdAt: 'article.createdAt',
+})(Meta);
+
 const Actions = ({ canModify }) => (
     <Bind controller props={{
             slug: 'article.slug',
@@ -38,30 +65,3 @@ const Actions = ({ canModify }) => (
         )}
     </Bind>
 );
-
-const Meta = ({ authorUsername, authorImage, createdAt, canModify }) => (
-    <div className="article-meta">
-        <Link to={`/@${authorUsername}`}>
-            <Userpic src={authorImage} alt={authorUsername} />
-        </Link>
-    
-        <div className="info">
-            <Link to={`/@${authorUsername}`} className="author">
-                {authorUsername}
-            </Link>
-            
-            <span className="date">
-                {new Date(createdAt).toDateString()}
-            </span>
-        </div>
-        
-        <Actions canModify={canModify} />
-    </div>
-);
-
-export default withBindings({
-    canModify: 'canModify',
-    authorUsername: 'article.author.username',
-    authorImage: 'article.author.image',
-    createdAt: 'article.createdAt',
-})(Meta);

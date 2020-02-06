@@ -11,8 +11,8 @@ import Login from './components/Login.js';
 import Register from './components/Register.js';
 import Article from './components/Article/index.js';
 import Editor from './components/Editor/index.js';
-import Profile from './components/Profile.js';
-import Settings from './components/Settings.js';
+import Profile from './components/Profile/index.js';
+import Settings from './components/Settings/index.js';
 
 const defaultState = {
     user: null,
