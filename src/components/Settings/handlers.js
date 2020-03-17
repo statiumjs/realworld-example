@@ -1,57 +1,40 @@
 export const initialize = async ({ $get, $set }) => {
-    try {
-        let user = $get('user');
-        
-        await $set({
-            image: user.image || '',
-            username: user.username || '',
-            bio: user.bio || '',
-            email: user.email || '',
-            busy: false,
-        });
-    }
-    catch (e) {
-        // No-op for now
-    }
+    let user = $get('user');
+    
+    await $set({
+        image: user.image || '',
+        username: user.username || '',
+        bio: user.bio || '',
+        email: user.email || '',
+        busy: false,
+    });
 };
 
 export const submit = async ({ $get, $dispatch }) => {
-    try {
-        const [api, image, username, bio, email, password] =
-            $get('api', 'image', 'username', 'bio', 'email', 'password');
+    const [api, image, username, bio, email, password] =
+        $get('api', 'image', 'username', 'bio', 'email', 'password');
+    
+    const user = await api.User.save({
+        image,
+        username,
+        bio,
+        email,
+        password,
+    });
+    
+    // Update the user object upstream
+    await $dispatch('setUser', user);
+    
+    if (!user) {
+        const history = $get('history');
         
-        const user = await api.User.save({
-            image,
-            username,
-            bio,
-            email,
-            password,
-        });
-        
-        // Update the user object upstream
-        await $dispatch('setUser', user);
-        
-        if (!user) {
-            const history = $get('history');
-            
-            history.push('/');
-        }
-    }
-    catch (e) {
-        console.log(e);
-        debugger;
-        // TODO Add error handling
+        history.push('/');
     }
 };
 
 export const logout = async ({ $get, $dispatch }) => {
-    try {
-        // Reset the user object upstream. This will clean up the JWT token as well.
-        await $dispatch('setUser', null);
-    }
-    catch (e) {
-        // TODO Add error handling
-    }
+    // Reset the user object upstream. This will clean up the JWT token as well.
+    await $dispatch('setUser', null);
 };
 
 export const validate = ({ password, password2, ...values }) => {

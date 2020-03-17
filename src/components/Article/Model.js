@@ -35,21 +35,16 @@ const canModify = $get => {
 const doFavors = async (type, { $get, $set }, slug) => {
     const api = $get('api');
     
-    try {
-        const { favorited, favoritesCount } = await api.Articles[type](slug);
-        const article = $get('article');
-        
-        await $set({
-            article: {
-                ...article,
-                favorited,
-                favoritesCount,
-            },
-        });
-    }
-    catch (e) {
-        // No-op for now
-    }
+    const { favorited, favoritesCount } = await api.Articles[type](slug);
+    const article = $get('article');
+    
+    await $set({
+        article: {
+            ...article,
+            favorited,
+            favoritesCount,
+        },
+    });
 };
 
 const favorite = (...args) => doFavors('favorite', ...args);

@@ -152,10 +152,7 @@ const login = async ({ $get, $set, $dispatch }, { email, password }) => {
         
         const user = get(data, 'user', null);
         
-        // TODO Revert to this after protected key setting bug is fixed:
-        // https://github.com/riptano/statium/issues/8
-        $dispatch('setUser', user);
-//         $set({ user });
+        $set({ user });
     }
     catch (e) {
         $set({

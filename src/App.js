@@ -60,6 +60,12 @@ const App = ({ history }) => (
                                     <Profile {...routeProps} tab="favorites" />
                                 )} />
                             <Route path="/@:username" component={Profile} />
+                            <Route path="/tag/:selectedTag"
+                                render={routeProps => (
+                                    <Home {...routeProps}
+                                        tab="tagFilter"
+                                        selectedTag={routeProps.match.params.selectedTag} />
+                                )} />
                             <Route path="/feed"
                                 render={routeProps => (
                                     <Home {...routeProps} tab="feed" />
@@ -83,15 +89,10 @@ const initialize = async ({ $set, $dispatch }) => {
             const api = getApi(token);
             const user = await api.User.current();
             
-            await $set({ api });
-            await $dispatch('setUser', user);
-            
-            // TODO Revert to this after protected key setting bug is fixed:
-            // https://github.com/riptano/statium/issues/8
-//             await $set({
-//                 api,
-//                 user,
-//             });
+            await $set({
+                api,
+                user,
+            });
         }
         catch (e) {
             // Token expired, etc. Default API is tokenless, so no need to set it again.

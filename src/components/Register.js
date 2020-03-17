@@ -115,20 +115,15 @@ const Register = () => (
 export default Register;
 
 const submit = async ({ $get, $set }) => {
-    try {
-        const [api, username, email, password] =
-            $get('api', 'username', 'email', 'password');
-        
-        const user = await api.User.register(username, email, password);
-        
-        await $set('user', user);
-        
-        const history = $get('history');
-        history.push('/');
-    }
-    catch (e) {
-        // TODO Handle errors
-    }
+    const [api, username, email, password] =
+        $get('api', 'username', 'email', 'password');
+    
+    const user = await api.User.register(username, email, password);
+    
+    await $set('user', user);
+    
+    const history = $get('history');
+    history.push('/');
 };
 
 const validate = ({ password, password2, ...state }) => {

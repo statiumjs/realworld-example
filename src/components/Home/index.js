@@ -18,77 +18,22 @@ const initialState = {
     loading: false,
 };
 
-const loadArticles = async ({ $get, $set }, props) => {
-    if ($get('loading')) {
-        return;
-    }
-    
-    if (props && props.tab) {
-        await $set('tab', props.tab);
-    }
-    
-    const [api, tab, page, limit, selectedTag] =
-        $get('api', 'tab', 'page', 'limit', 'selectedTag');
-    
-    await $set('loading', true);
-    
-    const feedFn = tab === 'feed' ? api.Articles.feed : api.Articles.all;
-    
-    const { articles = [], articlesCount = 0 }
-        = selectedTag
-        ? await api.Articles.byTag(selectedTag, page, limit)
-        : await feedFn(page, limit);
-    
-    // N.B. Loading tags every time is probably not required, but it's a demo...
-    const { tags } = await api.Tags.all();
-    
-    $set({
-        loading: false,
-        articles,
-        articlesCount,
-        tags,
-    });
-};
-
-const wrapSetter = name => async ({ $set, $dispatch }, arg) => {
-    await $set(name, arg);
-    
-    $dispatch('loadArticles');
-};
-
-const setTab = async ({ $get, $set, $dispatch }, tab) => {
-    await $set({
-        tab,
-        selectedTag: null,
-    });
-    
-    const newPath = tab === 'feed' ? '/feed' : '/';
-    
-    const history = $get('history');
-    history.push(newPath);
-    
-    $dispatch('loadArticles');
-};
-
-const Home = ({ appName, ...props }) => (
+const Home = ({ appName, tab, selectedTag }) => (
     <ViewModel id="Home"
-        initialState={initialState}
+        initialState={{
+            ...initialState,
+            ...tab != null ? { tab } : {},
+            ...selectedTag != null ? { selectedTag } : {},
+        }}
         protectedKeys={["tab", "page", "limit", "selectedTag"]}
         controller={{
-            initialize: vc => loadArticles(vc, props),
+            initialize: loadArticles,
             handlers: {
-                loadArticles: loadArticles,
+                loadArticles,
                 setPage: wrapSetter('page'),
                 setLimit: wrapSetter('limit'),
                 setTab,
-                setSelectedTag: async ({ $set, $dispatch }, selectedTag) => {
-                    await $set({
-                        selectedTag,
-                        tab: 'tagFilter',
-                    });
-                    
-                    $dispatch('loadArticles');
-                },
+                setSelectedTag,
             },
         }}>
         <div className="home-page">
@@ -117,5 +62,61 @@ const Home = ({ appName, ...props }) => (
     </ViewModel>
 );
 
-
 export default withBindings('appName')(Home);
+
+const loadArticles = async ({ $get, $set }) => {
+    if ($get('loading')) {
+        return;
+    }
+    
+    const [api, tab, page, limit, selectedTag] =
+        $get('api', 'tab', 'page', 'limit', 'selectedTag');
+    
+    await $set('loading', true);
+    
+    const { articles = [], articlesCount = 0 }
+        = selectedTag    ? await api.Articles.byTag(selectedTag, page, limit)
+        : tab === 'feed' ? await api.Articles.feed(page, limit)
+        :                  await api.Articles.all(page, limit)
+        ;
+    
+    // N.B. Loading tags every time is probably not required, but it's a demo...
+    const { tags } = await api.Tags.all();
+    
+    $set({
+        loading: false,
+        articles,
+        articlesCount,
+        tags,
+    });
+};
+
+const wrapSetter = name => async ({ $set, $dispatch }, arg) => {
+    await $set(name, arg);
+    
+    $dispatch('loadArticles');
+};
+
+const setSelectedTag = async ({ $set, $dispatch }, selectedTag) =>
+    // Setting the tab will load the articles, see setTab
+    $set({
+        selectedTag,
+        tab: 'tagFilter',
+    });
+
+const setTab = async ({ $get, $set, $dispatch }, tab) => {
+    await $set({
+        tab,
+        ...tab === 'tagFilter' ? {} : { selectedTag: null },
+    });
+    
+    const newPath = tab === 'feed'      ? '/feed'
+                  : tab === 'tagFilter' ? `/tag/${$get('selectedTag')}`
+                  :                       '/'
+                  ;
+    
+    const history = $get('history');
+    history.push(newPath);
+    
+    $dispatch('loadArticles');
+};
