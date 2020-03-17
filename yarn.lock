@@ -7141,11 +7141,6 @@ lodash.clone@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.clone/-/lodash.clone-4.5.0.tgz#195870450f5a13192478df4bc3d23d2dea1907b6"
   integrity sha1-GVhwRQ9aExkkeN9Lw9I9LeoZB7Y=
 
-lodash.defer@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/lodash.defer/-/lodash.defer-4.1.0.tgz#e9c158a961de1a46ea24fda34685b4ccdd358f3f"
-  integrity sha1-6cFYqWHeGkbqJP2jRoW0zN01jz8=
-
 lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
@@ -10467,14 +10462,13 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
-statium@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/statium/-/statium-0.2.3.tgz#ec56931845d40982617132dca540404fb2dd524e"
-  integrity sha512-duIl1vX7yHfkhxdAoe+VnFumLagIhw4SdS7oGAd8TzzY3U5JwbDOo7T6FuVaMr5dUebHtU8y+AFip0UEluCxjw==
+statium@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/statium/-/statium-0.4.1.tgz#264add031ac4adcafccaaf09cec993149b4b9a89"
+  integrity sha512-DhRo5/RKlfasV/xxy4RMKJA24jUAkzqAZNazPhLIwCv3qd4XLodbKFLSV7lrXJaLwMDOReii2LmdzqUYgQ52kQ==
   dependencies:
     core-js "^3.4.8"
     lodash.clone "^4.5.0"
-    lodash.defer "^4.1.0"
     lodash.get "^4.4.2"
     lodash.has "^4.5.2"
     lodash.set "^4.3.2"
