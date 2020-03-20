@@ -3,7 +3,6 @@ import ViewModel, { Bind } from 'statium';
 import { Link } from 'react-router-dom';
 
 import LoadMask from './LoadMask.js';
-import ErrorList from './ErrorList';
 
 const defaultState = {
     busy: false,
@@ -18,6 +17,9 @@ const Register = () => (
     <ViewModel id="Register"
         initialState={defaultState}
         applyState={validate}
+        formulas={{
+            isValid,
+        }}
         controller={{
             handlers: {
                 submit,
@@ -26,9 +28,9 @@ const Register = () => (
         
         <Bind controller
             props={["busy", "errors", ["username", true], ["email", true],
-                   ["password", true], ["password2", true]]}>
+                   ["password", true], ["password2", true], "isValid"]}>
             
-            { ({ busy, errors, ...values }, { $dispatch }) => (
+            { ({ busy, errors, isValid, ...values }, { $dispatch }) => (
                 <div className="auth-page">
                     <LoadMask loading={busy} />
                     
@@ -45,28 +47,34 @@ const Register = () => (
                                     </Link>
                                 </p>
                                 
-                                <ErrorList errors={errors} />
-                                
                                 <form>
                                     <fieldset>
                                         <fieldset className="form-group">
                                             <input type="text"
-                                                className="form-control form-control-lg"
+                                                className={"form-control form-control-lg" +
+                                                          (errors.username ? " is-invalid" : "")}
                                                 placeholder="Username"
                                                 value={values.username}
                                                 onChange={e => {
                                                     values.setUsername(e.target.value);
                                                 }} />
+                                            <div className="invalid-feedback">
+                                                {errors.username || ''}
+                                            </div>
                                         </fieldset>
                                         
                                         <fieldset className="form-group">
                                             <input type="email"
-                                                className="form-control form-control-lg"
+                                                className={"form-control form-control-lg" +
+                                                           (errors.email ? " is-invalid" : "")}
                                                 placeholder="Email"
                                                 value={values.email}
                                                 onChange={e => {
                                                     values.setEmail(e.target.value);
                                                 }} />
+                                            <div className="invalid-feedback">
+                                                {errors.email || ''}
+                                            </div>
                                         </fieldset>
                                         
                                         <fieldset className="form-group">
@@ -78,6 +86,9 @@ const Register = () => (
                                                 onChange={e => {
                                                     values.setPassword(e.target.value);
                                                 }} />
+                                            <div className="invalid-feedback">
+                                                {errors.password || ''}
+                                            </div>
                                         </fieldset>
                                         
                                         <fieldset className="form-group">
@@ -89,12 +100,15 @@ const Register = () => (
                                                 onChange={e => {
                                                     values.setPassword2(e.target.value);
                                                 }} />
+                                            <div className="invalid-feedback">
+                                                {errors.password2 || ''}
+                                            </div>
                                         </fieldset>
                                     </fieldset>
                                     
                                     <button type="button"
                                         className="btn btn-lg btn-primary pull-xs-right"
-                                        disabled={busy || Object.keys(errors).length > 0}
+                                        disabled={busy || !isValid}
                                         onClick={e => {
                                             e.preventDefault();
                                             $dispatch('submit');
@@ -118,33 +132,64 @@ const submit = async ({ $get, $set }) => {
     const [api, username, email, password] =
         $get('api', 'username', 'email', 'password');
     
-    const user = await api.User.register(username, email, password);
+    try {
+        await $set('busy', true);
+
+        const user = await api.User.register(username, email, password);
     
-    await $set('user', user);
-    
-    const history = $get('history');
-    history.push('/');
+        await $set({
+            user,
+            busy: false,
+        });
+        
+        const history = $get('history');
+        history.push('/');
+    }
+    catch (e) {
+        let errors = e?.response?.data?.errors;
+        
+        if (!errors) {
+            errors = { username: "Unspecified server error: " + e.toString() };
+        }
+
+        await $set({
+            errors,
+            busy: false,
+        });
+    }
 };
 
-const validate = ({ password, password2, ...state }) => {
-    const errors = { ...state.errors };
-    
-    if (password !== '' && password.length < 3) {
+const validate = ({ password, password2, ...state }) => ({
+    errors: {
+        // Additive here to keep errors returned from the back end
+        ...state.errors,
+        
         // This is very arbitrary, just to showcase form validation
-        errors.password = 'Invalid password: should be longer than 3 characters!';
+        password: password !== '' && password.length < 3
+            ? 'Invalid password: should be longer than 3 characters!'
+            : null,
+        password2: password2 !== '' && password2 !== password
+            ? 'Passwords do not match!'
+            : null,
+    },
+});
+
+// Our form is valid when there are no errors *and* it is filled in.
+const isValid = $get => {
+    const errors = $get('errors');
+
+    for (const error of Object.values(errors)) {
+        if (error) {
+            return false;
+        }
     }
-    else {
-        delete errors.password;
+
+    const [username, email, password, password2] =
+        $get('username', 'email', 'password', 'password2');
+
+    if (username && email && password && password2) {
+        return true;
     }
-    
-    if (password2 !== '' && password2 !== password) {
-        errors.password2 = 'Passwords do not match!';
-    }
-    else {
-        delete errors.password2;
-    }
-    
-    return {
-        errors,
-    };
+
+    return false;
 };
