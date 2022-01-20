@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadMask should render hidden by default 1`] = `
+<div
+  className="load-mask hidden"
+>
+  <div
+    className="load-mask-inner"
+  >
+    <i
+      className="ion ion-load-c load-spinner"
+      style={
+        Object {
+          "fontSize": "50px",
+        }
+      }
+    />
+  </div>
+</div>
+`;
+
+exports[`LoadMask should render visible when loading prop is true 1`] = `
+<div
+  className="load-mask "
+>
+  <div
+    className="load-mask-inner"
+  >
+    <i
+      className="ion ion-load-c load-spinner"
+      style={
+        Object {
+          "fontSize": "50px",
+        }
+      }
+    />
+  </div>
+</div>
+`;

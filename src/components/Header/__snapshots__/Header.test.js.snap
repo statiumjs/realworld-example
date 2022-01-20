@@ -1,0 +1,269 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header component should render when logged in 1`] = `
+<Header>
+  <nav
+    className="navbar navbar-light"
+  >
+    <div
+      className="container"
+    >
+      <Link
+        className="navbar-brand"
+        to="/"
+      >
+        <a
+          className="navbar-brand"
+          href="/"
+          onClick={[Function]}
+        >
+          conduit
+        </a>
+      </Link>
+      <LoggedIn
+        user={
+          Object {
+            "image": "https://foo.bar/baz.png",
+            "username": "foobaroo",
+          }
+        }
+      >
+        <ul
+          className="nav navbar-nav pull-xs-right"
+        >
+          <li
+            className="nav-item"
+          >
+            <NavLink
+              to="/"
+            >
+              <NavLink
+                className={[Function]}
+                to="/"
+              >
+                <Link
+                  aria-current="page"
+                  className="nav-link active"
+                  to="/"
+                >
+                  <a
+                    aria-current="page"
+                    className="nav-link active"
+                    href="/"
+                    onClick={[Function]}
+                  >
+                    Home
+                  </a>
+                </Link>
+              </NavLink>
+            </NavLink>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <NavLink
+              to="/editor"
+            >
+              <NavLink
+                className={[Function]}
+                to="/editor"
+              >
+                <Link
+                  className="nav-link "
+                  to="/editor"
+                >
+                  <a
+                    className="nav-link "
+                    href="/editor"
+                    onClick={[Function]}
+                  >
+                    <i
+                      className="ion-compose"
+                    />
+                     New Article
+                  </a>
+                </Link>
+              </NavLink>
+            </NavLink>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <NavLink
+              to="/settings"
+            >
+              <NavLink
+                className={[Function]}
+                to="/settings"
+              >
+                <Link
+                  className="nav-link "
+                  to="/settings"
+                >
+                  <a
+                    className="nav-link "
+                    href="/settings"
+                    onClick={[Function]}
+                  >
+                    <i
+                      className="ion-gear-a"
+                    />
+                     Settings
+                  </a>
+                </Link>
+              </NavLink>
+            </NavLink>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <NavLink
+              to="/@foobaroo"
+            >
+              <NavLink
+                className={[Function]}
+                to="/@foobaroo"
+              >
+                <Link
+                  className="nav-link "
+                  to="/@foobaroo"
+                >
+                  <a
+                    className="nav-link "
+                    href="/@foobaroo"
+                    onClick={[Function]}
+                  >
+                    <Userpic
+                      alt="foobaroo"
+                      className="user-pic"
+                      src="https://foo.bar/baz.png"
+                    >
+                      <img
+                        alt="foobaroo"
+                        className="user-pic"
+                        src="https://foo.bar/baz.png"
+                      />
+                    </Userpic>
+                    <span>
+                       
+                      foobaroo
+                    </span>
+                  </a>
+                </Link>
+              </NavLink>
+            </NavLink>
+          </li>
+        </ul>
+      </LoggedIn>
+    </div>
+  </nav>
+</Header>
+`;
+
+exports[`Header component should render when logged out 1`] = `
+<Header>
+  <nav
+    className="navbar navbar-light"
+  >
+    <div
+      className="container"
+    >
+      <Link
+        className="navbar-brand"
+        to="/"
+      >
+        <a
+          className="navbar-brand"
+          href="/"
+          onClick={[Function]}
+        >
+          conduit
+        </a>
+      </Link>
+      <LoggedOut>
+        <ul
+          className="nav navbar-nav pull-xs-right"
+        >
+          <li
+            className="nav-item"
+          >
+            <NavLink
+              to="/"
+            >
+              <NavLink
+                className={[Function]}
+                to="/"
+              >
+                <Link
+                  aria-current="page"
+                  className="nav-link active"
+                  to="/"
+                >
+                  <a
+                    aria-current="page"
+                    className="nav-link active"
+                    href="/"
+                    onClick={[Function]}
+                  >
+                    Home
+                  </a>
+                </Link>
+              </NavLink>
+            </NavLink>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <NavLink
+              to="/login"
+            >
+              <NavLink
+                className={[Function]}
+                to="/login"
+              >
+                <Link
+                  className="nav-link "
+                  to="/login"
+                >
+                  <a
+                    className="nav-link "
+                    href="/login"
+                    onClick={[Function]}
+                  >
+                    Sign in
+                  </a>
+                </Link>
+              </NavLink>
+            </NavLink>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <NavLink
+              to="/register"
+            >
+              <NavLink
+                className={[Function]}
+                to="/register"
+              >
+                <Link
+                  className="nav-link "
+                  to="/register"
+                >
+                  <a
+                    className="nav-link "
+                    href="/register"
+                    onClick={[Function]}
+                  >
+                    Sign up
+                  </a>
+                </Link>
+              </NavLink>
+            </NavLink>
+          </li>
+        </ul>
+      </LoggedOut>
+    </div>
+  </nav>
+</Header>
+`;

@@ -1,23 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import ViewModel from 'statium';
+import { BrowserRouter } from 'react-router-dom';
 
-import ErrorBoundary from './ErrorBoundary.js';
-import App from './App.js';
-
-import './index.css';
+import ErrorBoundary from './ErrorBoundary.jsx';
+import App from './App.jsx';
 
 const Index = () => (
-    <ErrorBoundary>
-        <ViewModel id="index" data={{ appName: 'Conduit' }}>
-            <BrowserRouter>
-                <Switch>
-                    <Route path="/" component={App} />
-                </Switch>
-            </BrowserRouter>
-        </ViewModel>
-    </ErrorBoundary>
+	<ErrorBoundary>
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
+	</ErrorBoundary>
 );
 
 ReactDOM.render(<Index />, document.getElementById('root'));

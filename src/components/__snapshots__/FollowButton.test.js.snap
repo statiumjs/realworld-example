@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FollowButton component rendering should render the 'follow' button when not following a user 1`] = `
+<FollowButton
+  following={false}
+  username="foobaroo"
+>
+  <button
+    className="btn btn-sm action-btn btn-outline-secondary"
+    disabled={false}
+    onClick={[Function]}
+    style={
+      Object {
+        "opacity": "1",
+      }
+    }
+  >
+    <i
+      className="ion-plus-round"
+    />
+     
+    Follow foobaroo
+  </button>
+</FollowButton>
+`;
+
+exports[`FollowButton component rendering should render the 'unfollow' button when following a user 1`] = `
+<FollowButton
+  following={true}
+  username="foobaroo"
+>
+  <button
+    className="btn btn-sm action-btn btn-secondary"
+    disabled={false}
+    onClick={[Function]}
+    style={
+      Object {
+        "opacity": "1",
+      }
+    }
+  >
+    <i
+      className="ion-minus-round"
+    />
+     
+    Unfollow foobaroo
+  </button>
+</FollowButton>
+`;

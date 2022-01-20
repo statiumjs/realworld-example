@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Application renders 1`] = `
+<App>
+  <Store
+    data={
+      Object {
+        "navigate": [Function],
+      }
+    }
+    initialState={
+      Object {
+        "api": Object {
+          "Articles": Object {
+            "all": [Function],
+            "byAuthor": [Function],
+            "bySlug": [Function],
+            "byTag": [Function],
+            "create": [Function],
+            "delete": [Function],
+            "deleteComment": [Function],
+            "favorite": [Function],
+            "favoritedBy": [Function],
+            "feed": [Function],
+            "getComments": [Function],
+            "postComment": [Function],
+            "unfavorite": [Function],
+            "update": [Function],
+          },
+          "Profile": Object {
+            "follow": [Function],
+            "get": [Function],
+            "unfollow": [Function],
+          },
+          "Tags": Object {
+            "all": [Function],
+          },
+          "User": Object {
+            "current": [Function],
+            "login": [Function],
+            "register": [Function],
+            "save": [Function],
+          },
+        },
+        "appReady": false,
+        "user": null,
+      }
+    }
+    tag="App"
+  >
+    <Index>
+      <div
+        className="container"
+      >
+        <LoadMask
+          loading={true}
+        >
+          <div
+            className="load-mask "
+          >
+            <div
+              className="load-mask-inner"
+            >
+              <i
+                className="ion ion-load-c load-spinner"
+                style={
+                  Object {
+                    "fontSize": "50px",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </LoadMask>
+      </div>
+    </Index>
+  </Store>
+</App>
+`;

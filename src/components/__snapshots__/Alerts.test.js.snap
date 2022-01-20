@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alerts behavior should display alert when action is dispatched 1`] = `
+<Alert
+  id={0}
+  key="0"
+  text="plugh krabbe"
+  timeout={50}
+  type="success"
+>
+  <div
+    className="alert alert-success alert-dismissible"
+    role="alert"
+  >
+    plugh krabbe
+    <button
+      aria-label="Close"
+      className="close"
+      key="close"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ×
+      </span>
+    </button>
+  </div>
+</Alert>
+`;
+
+exports[`Alerts rendering should render alert widgets correctly 1`] = `
+<Alerts>
+  <Alert
+    dismissible={false}
+    id={0}
+    key="0"
+    text="foo bar"
+    type="error"
+  >
+    <div
+      className="alert alert-error "
+      role="alert"
+    >
+      foo bar
+    </div>
+  </Alert>
+  <Alert
+    id={1}
+    key="1"
+    text="blerg bonz"
+  >
+    <div
+      className="alert alert-primary alert-dismissible"
+      role="alert"
+    >
+      blerg bonz
+      <button
+        aria-label="Close"
+        className="close"
+        key="close"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+        >
+          ×
+        </span>
+      </button>
+    </div>
+  </Alert>
+  <Alert
+    id={2}
+    key="2"
+    text="throbbe zong"
+    type="success"
+  >
+    <div
+      className="alert alert-success alert-dismissible"
+      role="alert"
+    >
+      throbbe zong
+      <button
+        aria-label="Close"
+        className="close"
+        key="close"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+        >
+          ×
+        </span>
+      </button>
+    </div>
+  </Alert>
+</Alerts>
+`;
+
+exports[`Alerts rendering should render empty alert list by default 1`] = `<Alerts />`;

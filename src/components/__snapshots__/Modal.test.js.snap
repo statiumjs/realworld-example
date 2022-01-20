@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal component rendering should render hidden modal and no backdrop 1`] = `
+<Modal
+  buttons={Array []}
+  content="frobbe throbbe"
+  show={false}
+  title="foo bar"
+>
+  <div
+    className="modal fade"
+    role="dialog"
+    tabIndex="-1"
+  >
+    <div
+      className="modal-dialog"
+      role="document"
+    >
+      <div
+        className="modal-content"
+      >
+        <div
+          className="modal-header"
+        >
+          <h5
+            className="modal-title"
+          >
+            foo bar
+          </h5>
+          <button
+            aria-label="Close"
+            className="close"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              aria-hidden="true"
+            >
+              ×
+            </span>
+          </button>
+        </div>
+        <div
+          className="modal-body"
+        >
+          frobbe throbbe
+        </div>
+        <div
+          className="modal-footer"
+        />
+      </div>
+    </div>
+  </div>
+</Modal>
+`;
+
+exports[`Modal component rendering should render visible modal with backdrop 1`] = `
+<Modal
+  buttons={Array []}
+  content="froo froo funtz"
+  show={true}
+  title="krung klatz"
+>
+  <div
+    className="modal fade"
+    role="dialog"
+    tabIndex="-1"
+  >
+    <div
+      className="modal-dialog"
+      role="document"
+    >
+      <div
+        className="modal-content"
+      >
+        <div
+          className="modal-header"
+        >
+          <h5
+            className="modal-title"
+          >
+            krung klatz
+          </h5>
+          <button
+            aria-label="Close"
+            className="close"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              aria-hidden="true"
+            >
+              ×
+            </span>
+          </button>
+        </div>
+        <div
+          className="modal-body"
+        >
+          froo froo funtz
+        </div>
+        <div
+          className="modal-footer"
+        />
+      </div>
+    </div>
+  </div>
+</Modal>
+`;

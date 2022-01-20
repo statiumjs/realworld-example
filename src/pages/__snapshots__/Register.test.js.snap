@@ -1,0 +1,339 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register form UI behavior should disable submit button when there are server errors 1`] = `
+<ErrorList
+  errors={
+    Object {
+      "email": Array [
+        "has already been taken",
+      ],
+      "username": Array [
+        "has already been taken",
+      ],
+    }
+  }
+>
+  <ul
+    className="error-messages"
+  >
+    <li
+      key="email"
+    >
+      email: 
+      has already been taken
+    </li>
+    <li
+      key="username"
+    >
+      username: 
+      has already been taken
+    </li>
+  </ul>
+</ErrorList>
+`;
+
+exports[`Register form UI behavior should enable submit button when filled in and valid 1`] = `
+<Register>
+  <Store
+    controlStateChange={[Function]}
+    data={Object {}}
+    initialState={
+      Object {
+        "busy": false,
+        "email": "",
+        "errors": Object {},
+        "password": "",
+        "password2": "",
+        "serverErrors": null,
+        "username": "",
+      }
+    }
+    tag="Register"
+  >
+    <div
+      className="auth-page"
+    >
+      <LoadMask
+        loading={false}
+      >
+        <div
+          className="load-mask hidden"
+        >
+          <div
+            className="load-mask-inner"
+          >
+            <i
+              className="ion ion-load-c load-spinner"
+              style={
+                Object {
+                  "fontSize": "50px",
+                }
+              }
+            />
+          </div>
+        </div>
+      </LoadMask>
+      <div
+        className="container page"
+      >
+        <div
+          className="row"
+        >
+          <div
+            className="col-md-6 offset-md-3 col-xs-12"
+          >
+            <h1
+              className="text-xs-center"
+            >
+              Sign Up
+            </h1>
+            <p
+              className="text-xs-center"
+            >
+              <Link
+                to="/login"
+              >
+                <a
+                  href="/login"
+                  onClick={[Function]}
+                >
+                  Have an account?
+                </a>
+              </Link>
+            </p>
+            <ErrorList
+              errors={Object {}}
+            >
+              <ul
+                className="error-messages"
+              />
+            </ErrorList>
+            <form
+              onSubmit={[Function]}
+            >
+              <fieldset>
+                <fieldset
+                  className="form-group"
+                >
+                  <input
+                    className="form-control form-control-lg is-valid"
+                    onChange={[Function]}
+                    placeholder="Username"
+                    type="text"
+                    value="foobaroo"
+                  />
+                  <div
+                    className="invalid-feedback"
+                  />
+                </fieldset>
+                <fieldset
+                  className="form-group"
+                >
+                  <input
+                    className="form-control form-control-lg is-valid"
+                    onChange={[Function]}
+                    placeholder="Email"
+                    type="email"
+                    value="foo@bar.baz"
+                  />
+                  <div
+                    className="invalid-feedback"
+                  />
+                </fieldset>
+                <fieldset
+                  className="form-group"
+                >
+                  <input
+                    className="form-control form-control-lg is-valid"
+                    onChange={[Function]}
+                    placeholder="Password"
+                    type="password"
+                    value="foobaroo"
+                  />
+                  <div
+                    className="invalid-feedback"
+                  />
+                </fieldset>
+                <fieldset
+                  className="form-group"
+                >
+                  <input
+                    className="form-control form-control-lg is-valid"
+                    onChange={[Function]}
+                    placeholder="Confirm password"
+                    type="password"
+                    value="foobaroo"
+                  />
+                  <div
+                    className="invalid-feedback"
+                  />
+                </fieldset>
+              </fieldset>
+              <button
+                className="btn btn-lg btn-primary pull-xs-right"
+                disabled={false}
+                type="submit"
+              >
+                Sign up
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Store>
+</Register>
+`;
+
+exports[`Register form UI behavior should render 1`] = `
+<Register>
+  <Store
+    controlStateChange={[Function]}
+    data={Object {}}
+    initialState={
+      Object {
+        "busy": false,
+        "email": "",
+        "errors": Object {},
+        "password": "",
+        "password2": "",
+        "serverErrors": null,
+        "username": "",
+      }
+    }
+    tag="Register"
+  >
+    <div
+      className="auth-page"
+    >
+      <LoadMask
+        loading={false}
+      >
+        <div
+          className="load-mask hidden"
+        >
+          <div
+            className="load-mask-inner"
+          >
+            <i
+              className="ion ion-load-c load-spinner"
+              style={
+                Object {
+                  "fontSize": "50px",
+                }
+              }
+            />
+          </div>
+        </div>
+      </LoadMask>
+      <div
+        className="container page"
+      >
+        <div
+          className="row"
+        >
+          <div
+            className="col-md-6 offset-md-3 col-xs-12"
+          >
+            <h1
+              className="text-xs-center"
+            >
+              Sign Up
+            </h1>
+            <p
+              className="text-xs-center"
+            >
+              <Link
+                to="/login"
+              >
+                <a
+                  href="/login"
+                  onClick={[Function]}
+                >
+                  Have an account?
+                </a>
+              </Link>
+            </p>
+            <ErrorList
+              errors={Object {}}
+            >
+              <ul
+                className="error-messages"
+              />
+            </ErrorList>
+            <form
+              onSubmit={[Function]}
+            >
+              <fieldset>
+                <fieldset
+                  className="form-group"
+                >
+                  <input
+                    className="form-control form-control-lg is-valid"
+                    onChange={[Function]}
+                    placeholder="Username"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    className="invalid-feedback"
+                  />
+                </fieldset>
+                <fieldset
+                  className="form-group"
+                >
+                  <input
+                    className="form-control form-control-lg is-valid"
+                    onChange={[Function]}
+                    placeholder="Email"
+                    type="email"
+                    value=""
+                  />
+                  <div
+                    className="invalid-feedback"
+                  />
+                </fieldset>
+                <fieldset
+                  className="form-group"
+                >
+                  <input
+                    className="form-control form-control-lg is-valid"
+                    onChange={[Function]}
+                    placeholder="Password"
+                    type="password"
+                    value=""
+                  />
+                  <div
+                    className="invalid-feedback"
+                  />
+                </fieldset>
+                <fieldset
+                  className="form-group"
+                >
+                  <input
+                    className="form-control form-control-lg is-valid"
+                    onChange={[Function]}
+                    placeholder="Confirm password"
+                    type="password"
+                    value=""
+                  />
+                  <div
+                    className="invalid-feedback"
+                  />
+                </fieldset>
+              </fieldset>
+              <button
+                className="btn btn-lg btn-primary pull-xs-right"
+                disabled={true}
+                type="submit"
+              >
+                Sign up
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Store>
+</Register>
+`;

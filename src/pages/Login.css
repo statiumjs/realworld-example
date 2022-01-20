@@ -1,0 +1,11 @@
+.form-control.is-invalid {
+  border: 1px solid red;
+}
+
+.error-messages {
+  min-height: 24px;
+}
+
+.invalid-feedback {
+  min-height: 24px;
+}

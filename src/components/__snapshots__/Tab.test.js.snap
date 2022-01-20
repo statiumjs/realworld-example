@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tab widget should render with active cls when currentTab === id 1`] = `
+<Tab
+  currentTab="bar"
+  id="bar"
+  name="Bar tab :)"
+  to="/bar"
+>
+  <li
+    className="nav-item"
+  >
+    <Link
+      className="nav-link active"
+      onClick={[Function]}
+      to=""
+    >
+      <a
+        className="nav-link active"
+        href="/"
+        onClick={[Function]}
+      >
+        Bar tab :)
+      </a>
+    </Link>
+  </li>
+</Tab>
+`;
+
+exports[`Tab widget should render with inactive cls when currentTab !== id 1`] = `
+<Tab
+  currentTab="bar"
+  id="foo"
+  name="Foo tab"
+  to="/foo"
+>
+  <li
+    className="nav-item"
+  >
+    <Link
+      className="nav-link "
+      onClick={[Function]}
+      to=""
+    >
+      <a
+        className="nav-link "
+        href="/"
+        onClick={[Function]}
+      >
+        Foo tab
+      </a>
+    </Link>
+  </li>
+</Tab>
+`;
