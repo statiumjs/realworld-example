@@ -1,13 +1,17 @@
 const baseURL = 'https://api.realworld.io/api';
 
-let headers = {
+let headers = {};
+
+const defaultHeaders = {
   'Content-Type': 'application/json',
 };
 
-const handleResponse = async response => {
-  let json;
+const handleResponse = async fetchPromise => {
+  let response, json;
 
   try {
+    response = await fetchPromise;
+
     // Responses to some DELETE requests contain empty body,
     // which will result in an exception when trying to parse it.
     json = await response.json();
@@ -20,6 +24,11 @@ const handleResponse = async response => {
     return json ?? {};
   }
   else {
+    if (response.status === 401) {
+      window.location.assign('/login');
+      return;
+    }
+
     const error = new Error(response.status);
 
     // Some back end API calls do not conform to the rest of the spec
@@ -36,7 +45,6 @@ const handleResponse = async response => {
           error: json,
         },
       }
-
     }
 
     throw error;
@@ -44,39 +52,44 @@ const handleResponse = async response => {
 };
 
 const requests = {
-  get: async url => handleResponse(await fetch(baseURL + url)),
+  get: async url => handleResponse(fetch(baseURL + url, { defaultHeaders })),
 
   post: async (url, payload) => handleResponse(
-    await fetch(baseURL + url, {
+    fetch(baseURL + url, {
       method: 'POST',
-      headers,
+      headers: {
+        ...defaultHeaders,
+        ...headers,
+      },
       body: JSON.stringify(payload),
     })
   ),
 
   put: async (url, payload) => handleResponse(
-    await fetch(baseURL + url, {
+    fetch(baseURL + url, {
       method: 'PUT',
-      headers,
+      headers: {
+        ...defaultHeaders,
+        ...headers,
+      },
       body: JSON.stringify(payload),
     })
   ),
 
   delete: async url => handleResponse(
-    await fetch(baseURL + url, {
+    fetch(baseURL + url, {
       method: 'DELETE',
-      headers,
+      headers: {
+        ...defaultHeaders,
+        ...headers,
+      },
       body: '',
     })
   ),
 };
 
 const User = {
-  current: async () => {
-    const response = await requests.get('/user');
-
-    return response?.user ?? null;
-  },
+  current: async () => (await requests.get('/user'))?.user ?? null,
 
   login: async (email, password) => {
     const response = await requests.post('/users/login', { user: { email, password } });
@@ -104,8 +117,7 @@ const User = {
 }
 
 // Shameless copypasta from react-redux realworld example
-const limitedUrl = (page, limit) =>
-  `limit=${limit}&offset=${page ? page * limit : 0}`;
+const limitedUrl = (page, limit) => `limit=${limit}&offset=${page ? page * limit : 0}`;
 
 const Articles = {
   all: (page, limit) => requests.get('/articles?' + limitedUrl(page, limit)),
@@ -210,10 +222,7 @@ export const API = {
 };
 
 const getApi = token => {
-  headers = {
-    ...headers,
-    ...token ? { authorization: `Token ${token}` } : {},
-  };
+  headers = { ...token ? { authorization: `Token ${token}` } : {} };
 
   return API;
 };

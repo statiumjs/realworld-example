@@ -5,7 +5,6 @@ import Store, { useStore } from 'statium';
 import getApi from './api.js';
 import { getUser, setUser } from './actions/user.js';
 
-import LoadMask from './components/LoadMask.jsx';
 import Header from './components/Header/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Notifications from './components/NotificationProvider.jsx';
@@ -68,11 +67,7 @@ const Index = () => {
   }, [dispatch]);
 
   if (!state.appReady) {
-    return (
-      <div className="container">
-        <LoadMask loading={true} />
-      </div>
-    );
+    return <Header />;
   }
 
   return (
