@@ -44,11 +44,7 @@ const handleResponse = async response => {
 };
 
 const requests = {
-  get: async url => handleResponse(
-    await fetch(baseURL + url, {
-      headers,
-    })
-  ),
+  get: async url => handleResponse(await fetch(baseURL + url)),
 
   post: async (url, payload) => handleResponse(
     await fetch(baseURL + url, {
