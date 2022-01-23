@@ -10,38 +10,6 @@ exports[`Application renders 1`] = `
     }
     initialState={
       Object {
-        "api": Object {
-          "Articles": Object {
-            "all": [Function],
-            "byAuthor": [Function],
-            "bySlug": [Function],
-            "byTag": [Function],
-            "create": [Function],
-            "delete": [Function],
-            "deleteComment": [Function],
-            "favorite": [Function],
-            "favoritedBy": [Function],
-            "feed": [Function],
-            "getComments": [Function],
-            "postComment": [Function],
-            "unfavorite": [Function],
-            "update": [Function],
-          },
-          "Profile": Object {
-            "follow": [Function],
-            "get": [Function],
-            "unfollow": [Function],
-          },
-          "Tags": Object {
-            "all": [Function],
-          },
-          "User": Object {
-            "current": [Function],
-            "login": [Function],
-            "register": [Function],
-            "save": [Function],
-          },
-        },
         "appReady": false,
         "user": null,
       }
@@ -49,30 +17,131 @@ exports[`Application renders 1`] = `
     tag="App"
   >
     <Index>
-      <div
-        className="container"
-      >
-        <LoadMask
-          loading={true}
+      <Header>
+        <nav
+          className="navbar navbar-light"
         >
           <div
-            className="load-mask "
+            className="container"
           >
-            <div
-              className="load-mask-inner"
+            <Link
+              className="navbar-brand"
+              to="/"
             >
-              <i
-                className="ion ion-load-c load-spinner"
-                style={
-                  Object {
-                    "fontSize": "50px",
-                  }
-                }
-              />
-            </div>
+              <a
+                className="navbar-brand"
+                href="/"
+                onClick={[Function]}
+              >
+                conduit
+              </a>
+            </Link>
+            <LoggedOut>
+              <ul
+                className="nav navbar-nav pull-xs-right"
+              >
+                <li
+                  className="nav-item"
+                >
+                  <NavLink
+                    to="/"
+                  >
+                    <NavLink
+                      className={[Function]}
+                      to="/"
+                    >
+                      <Link
+                        aria-current="page"
+                        className="nav-link active"
+                        to="/"
+                      >
+                        <a
+                          aria-current="page"
+                          className="nav-link active"
+                          href="/"
+                          onClick={[Function]}
+                        >
+                          Home
+                        </a>
+                      </Link>
+                    </NavLink>
+                  </NavLink>
+                </li>
+                <li
+                  className="nav-item"
+                >
+                  <NavLink
+                    to="/login"
+                  >
+                    <NavLink
+                      className={[Function]}
+                      to="/login"
+                    >
+                      <Link
+                        className="nav-link "
+                        to="/login"
+                      >
+                        <a
+                          className="nav-link "
+                          href="/login"
+                          onClick={[Function]}
+                        >
+                          Sign in
+                        </a>
+                      </Link>
+                    </NavLink>
+                  </NavLink>
+                </li>
+                <li
+                  className="nav-item"
+                >
+                  <NavLink
+                    to="/register"
+                  >
+                    <NavLink
+                      className={[Function]}
+                      to="/register"
+                    >
+                      <Link
+                        className="nav-link "
+                        to="/register"
+                      >
+                        <a
+                          className="nav-link "
+                          href="/register"
+                          onClick={[Function]}
+                        >
+                          Sign up
+                        </a>
+                      </Link>
+                    </NavLink>
+                  </NavLink>
+                </li>
+              </ul>
+            </LoggedOut>
           </div>
-        </LoadMask>
-      </div>
+        </nav>
+      </Header>
+      <LoadMask
+        loading={true}
+      >
+        <div
+          className="load-mask "
+        >
+          <div
+            className="load-mask-inner"
+          >
+            <i
+              className="ion ion-load-c load-spinner"
+              style={
+                Object {
+                  "fontSize": "50px",
+                }
+              }
+            />
+          </div>
+        </div>
+      </LoadMask>
     </Index>
   </Store>
 </App>

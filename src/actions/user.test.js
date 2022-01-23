@@ -11,7 +11,7 @@ import {
 
 import { displayAlert } from "./alerts.js";
 
-import getApi, { API } from '../api.js';
+import API from '../api.js';
 
 const validUser = {
   username: 'foobaroo',
@@ -83,9 +83,7 @@ describe("user actions", () => {
     it("saves the token to localStorage if user is valid", async () => {
       await setUser({ set }, validUser);
 
-      const api = getApi(validUser.token);
-
-      expect(set).toHaveBeenCalledWith({ api, user: validUser });
+      expect(set).toHaveBeenCalledWith({ user: validUser });
       expect(window.localStorage.setItem).toHaveBeenCalledWith('jwtToken', validUser.token);
       expect(window.localStorage.removeItem).not.toHaveBeenCalled();
     });
@@ -93,9 +91,7 @@ describe("user actions", () => {
     it("removes the token from localStorage if user is invalid", async () => {
       await setUser({ set }, null);
 
-      const api = getApi();
-
-      expect(set).toHaveBeenCalledWith({ api, user: null });
+      expect(set).toHaveBeenCalledWith({ user: null });
       expect(window.localStorage.setItem).not.toHaveBeenCalled();
       expect(window.localStorage.removeItem).toHaveBeenCalledWith('jwtToken');
     });
@@ -104,7 +100,6 @@ describe("user actions", () => {
   describe("login", () => {
     beforeEach(() => {
       state = {
-        api: getApi(),
         user: null,
         email: validUser.email,
         password: 'foobaroo',
@@ -161,7 +156,6 @@ describe("user actions", () => {
   describe("register", () => {
     beforeEach(() => {
       state = {
-        api: getApi(),
         username: 'foobaroo',
         email: 'foo@bar.baz',
         password: 'foobaroo123',
@@ -230,7 +224,6 @@ describe("user actions", () => {
   describe("saveUserSettings", () => {
     beforeEach(() => {
       state = {
-        api: getApi(),
         ...validUser,
         password: 'foobaroo123',
         password2: 'foobaroo123',

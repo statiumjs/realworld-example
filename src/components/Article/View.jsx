@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useStore } from 'statium';
 
-import { marked } from 'marked';
+import Markdown from 'markdown-to-jsx';
 
 import Meta from './Meta.jsx';
 import Tags from './Tags.jsx';
@@ -26,8 +26,6 @@ const ArticleView = () => {
     return null;
   }
 
-  const bodyHtml = marked(article.body, { sanitize: true });
-
   return (
     <div className="article-page">
       <div className="banner">
@@ -40,7 +38,11 @@ const ArticleView = () => {
 
       <div className="container page">
         <div className="row article-content">
-          <div className="col-md-12" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+          <div className="col-md-12">
+            <Markdown>
+              {article.body}
+            </Markdown>
+          </div>
         </div>
 
         <Tags tags={article.tagList} />

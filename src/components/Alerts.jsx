@@ -41,7 +41,7 @@ export const Alert = props => {
         className="close"
         aria-label="Close"
         onClick={onClick}>
-        <span aria-hidden="true">&times;</span>
+        <span key="x" aria-hidden="true">&times;</span>
       </button>
     )];
   }

@@ -2,12 +2,12 @@
   "name": "react-statium-realworld-example",
   "version": "1.0.0",
   "dependencies": {
-    "marked": "^4.0.10",
+    "markdown-to-jsx": "^7.1.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.0.2",
     "react-scripts": "^4.0.3",
-    "statium": "^1.0.2",
+    "statium": "^1.0.4",
     "urlito": "^0.2.0"
   },
   "devDependencies": {
@@ -19,7 +19,7 @@
   "scripts": {
     "start": "PORT=4884 react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -1,4 +1,4 @@
-export const API = {
+const API = {
   User: {
     current: jest.fn(),
     login: jest.fn(),
@@ -31,7 +31,4 @@ export const API = {
   }
 }
 
-export default jest.fn(token => ({
-  ...API,
-  token,
-}));
+export default API;

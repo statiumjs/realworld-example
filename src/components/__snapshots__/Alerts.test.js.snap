@@ -22,6 +22,7 @@ exports[`Alerts behavior should display alert when action is dispatched 1`] = `
     >
       <span
         aria-hidden="true"
+        key="x"
       >
         ×
       </span>
@@ -65,6 +66,7 @@ exports[`Alerts rendering should render alert widgets correctly 1`] = `
       >
         <span
           aria-hidden="true"
+          key="x"
         >
           ×
         </span>
@@ -91,6 +93,7 @@ exports[`Alerts rendering should render alert widgets correctly 1`] = `
       >
         <span
           aria-hidden="true"
+          key="x"
         >
           ×
         </span>

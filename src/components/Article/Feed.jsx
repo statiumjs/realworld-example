@@ -5,6 +5,8 @@ import stateToUri from 'urlito';
 import ArticleStubList from './StubList.jsx';
 import ArticleLimitSelect from './LimitSelect.jsx';
 
+import API from '../../api.js';
+
 const tabBarClassByTab = {
   authored: 'articles-toggle',
   favorites: 'articles-toggle',
@@ -73,7 +75,6 @@ export const loadArticles = async ({ state, set }, params) => {
     return;
   }
 
-  const { api } = state;
   const { page, tab, selectedTag, username } = params;
 
   // We'd like to have an option to display _all_ articles available
@@ -87,19 +88,19 @@ export const loadArticles = async ({ state, set }, params) => {
   let response;
 
   if (selectedTag) {
-    response = await api.Articles.byTag(selectedTag, page, limit);
+    response = await API.Articles.byTag(selectedTag, page, limit);
   }
   else if (tab === 'feed') {
-    response = await api.Articles.feed(page, limit);
+    response = await API.Articles.feed(page, limit);
   }
   else if (tab === 'authored') {
-    response = await api.Articles.byAuthor(username, page, limit);
+    response = await API.Articles.byAuthor(username, page, limit);
   }
   else if (tab === 'favorites') {
-    response = await api.Articles.favoritedBy(username, page, limit);
+    response = await API.Articles.favoritedBy(username, page, limit);
   }
   else {
-    response = await api.Articles.all(page, limit);
+    response = await API.Articles.all(page, limit);
   }
 
   const { articles = [], articlesCount = 0 } = response;

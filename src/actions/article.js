@@ -1,5 +1,6 @@
 import { modal } from './modal.js';
 import { displayAlert } from './alerts.js';
+import API from '../api.js';
 
 export const emptyArticle = {
   title: '',
@@ -9,16 +10,16 @@ export const emptyArticle = {
 };
 
 export const loadArticle = async ({ state, set }, { slug, loadComments, loadProfile }) => {
-  const { api, user } = state;
+  const { user } = state;
 
   if (slug) {
     try {
       await set({ busy: true });
 
-      const article = await api.Articles.bySlug(slug);
+      const article = await API.Articles.bySlug(slug);
 
       if (loadComments) {
-        article.comments = await api.Articles.getComments(slug);
+        article.comments = await API.Article.getComments(slug);
       }
 
       // We load author profile in article display page, to correctly render
@@ -26,7 +27,7 @@ export const loadArticle = async ({ state, set }, { slug, loadComments, loadProf
       // author or not. It doesn't make sense to make additional request when
       // the author is current user, or if we're not logged in.
       if (loadProfile && user && article.author.username !== user.username) {
-        article.author = await api.Profile.get(article.author.username);
+        article.author = await API.Profile.get(article.author.username);
       }
 
       await set({
@@ -51,14 +52,12 @@ export const loadArticle = async ({ state, set }, { slug, loadComments, loadProf
 };
 
 export const postArticle = async ({ data, state, set, dispatch }) => {
-  const { api, article } = state;
+  const { article } = state;
   const { slug } = article;
 
   // When a new article is created, the slug is undefined
-  const apiFn = slug ? api.Articles.update : api.Articles.create;
-  const msg = slug
-    ? 'Article was updated successfully!'
-    : 'New article was posted sucessfully!';
+  const apiFn = slug ? API.Article.update : API.Article.create;
+  const msg = slug ? 'Article was updated successfully!' : 'New article was posted sucessfully!';
 
   await set({ busy: true });
 
@@ -115,7 +114,7 @@ export const deleteArticle = async ({ data, state, set, dispatch }, slug) => {
 
   try {
     // If no error is thrown, request was successful.
-    await state.api.Articles.delete(slug);
+    await API.Article.delete(slug);
 
     await dispatch(displayAlert, {
       type: "success",
@@ -140,13 +139,13 @@ export const deleteArticle = async ({ data, state, set, dispatch }, slug) => {
 };
 
 export const postComment = async ({ state, set, dispatch }, { slug, comment }) => {
-  const { api, article } = state;
+  const { article } = state;
 
   try {
-    await api.Articles.postComment(slug, comment);
+    await API.Article.postComment(slug, comment);
 
     // Refresh comments from the back end at this point
-    article.comments = await api.Articles.getComments(slug);
+    article.comments = await API.Article.getComments(slug);
 
     await set({ article });
 
@@ -163,7 +162,7 @@ export const postComment = async ({ state, set, dispatch }, { slug, comment }) =
 };
 
 export const deleteComment = async ({ state, set, dispatch }, { slug, commentId }) => {
-  const { api, article } = state;
+  const { article } = state;
 
   const comment = article.comments.find(c => c.id === commentId);
   const author = comment.author.username;
@@ -191,11 +190,9 @@ export const deleteComment = async ({ state, set, dispatch }, { slug, commentId 
   await set({ busy: true });
 
   try {
-    debugger;
-    await api.Articles.deleteComment(slug, commentId);
+    await API.Article.deleteComment(slug, commentId);
 
-    const { article } = state;
-    article.comments = await api.Articles.getComments(slug);
+    article.comments = await API.Article.getComments(slug);
 
     await set({
       article,
@@ -259,7 +256,8 @@ export const setTab = async ({ data, set }, to) => {
 };
 
 const doFavors = async (type, { state, set }, slug) => {
-  const { favorited, favoritesCount } = await state.api.Articles[type](slug);
+  const { favorited, favoritesCount } = await API.Article[type](slug);
+
   await set({
     article: {
       ...state.article,
@@ -273,7 +271,7 @@ export const favorite = (...args) => doFavors('favorite', ...args);
 export const unfavorite = (...args) => doFavors('unfavorite', ...args);
 
 const doFollowing = async (type, { state, set }, username) => {
-  const profile = await state.api.Profile[type](username);
+  const profile = await API.Profile[type](username);
 
   await set({
     article: {

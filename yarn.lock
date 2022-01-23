@@ -7216,10 +7216,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@^4.0.10:
-  version "4.0.10"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.10.tgz#423e295385cc0c3a70fa495e0df68b007b879423"
-  integrity sha512-+QvuFj0nGgO970fySghXGmuw+Fd0gD2x3+MqCWLIPf5oxdv1Ka6b2q+z9RP01P/IaKPMEramy+7cNy/Lw8c3hw==
+markdown-to-jsx@^7.1.6:
+  version "7.1.6"
+  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.1.6.tgz#421487df2a66fe4231d94db653a34da033691e62"
+  integrity sha512-1wrIGZYwIG2gR3yfRmbr4FlQmhaAKoKTpRo4wur4fp9p0njU1Hi7vR8fj0AUKKIcPduiJmPprzmCB5B/GvlC7g==
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -10266,10 +10266,10 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
-statium@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/statium/-/statium-1.0.2.tgz#6f0338a01c312433bb5b5c26f5e3343768dfb99e"
-  integrity sha512-jxozEzOna3GM+ciwXYGiI+oNhPAKZlcks85+XO5F5QIg9LPAFKtLGGxwKig36QgyepGa9kfZuqh3iD0NmSGWDA==
+statium@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/statium/-/statium-1.0.4.tgz#eab674ffbe4acf8864bc0a763469d0b2560e1b9e"
+  integrity sha512-nAbnWOOGNg3uwTkaedczhQElt5giD+3IB1kHNbVbJn3EH0QxjTlDFqhy9vSZXc98sEllnS0i+2QME70x4ezjHw==
 
 "statuses@>= 1.4.0 < 2", "statuses@>= 1.5.0 < 2", statuses@~1.5.0:
   version "1.5.0"

@@ -2,7 +2,7 @@ import React from 'react';
 import { useStore } from 'statium';
 import { Link } from 'react-router-dom';
 
-import { marked } from 'marked';
+import Markdown from 'markdown-to-jsx';
 
 import { deleteComment } from '../../../actions/article.js';
 
@@ -34,12 +34,14 @@ const CommentCard = ({ user, slug, articleAuthor, comment }) => {
     currentUsername === commentAuthor
   );
 
-  const commentHtml = marked(comment?.body ?? '', { sanitize: true });
-
   return (
     <div className="card">
       <div className="card-block">
-        <div className="card-text" dangerouslySetInnerHTML={{ __html: commentHtml }} />
+        <div className="card-text">
+          <Markdown>
+            {comment?.body ?? ''}
+          </Markdown>
+        </div>
       </div>
 
       <div className="card-footer">

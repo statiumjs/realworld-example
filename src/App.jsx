@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Store, { useStore } from 'statium';
 
-import getApi from './api.js';
 import { getUser, setUser } from './actions/user.js';
 
 import Header from './components/Header/Header.jsx';
@@ -18,10 +17,10 @@ import Article from './pages/Article.jsx';
 import Editor from './pages/Editor.jsx';
 import Profile from './pages/Profile.jsx';
 import Settings from './pages/Settings.jsx';
+import LoadMask from './components/LoadMask.jsx';
 
 const initialState = {
   user: null,
-  api: getApi(),
   appReady: false,
 };
 
@@ -67,7 +66,12 @@ const Index = () => {
   }, [dispatch]);
 
   if (!state.appReady) {
-    return <Header />;
+    return (
+      <>
+        <Header />
+        <LoadMask loading={true} />
+      </>
+    );
   }
 
   return (

@@ -1,4 +1,5 @@
-import getApi from '../api.js';
+import { setToken } from '../agent.js';
+import API from '../api.js';
 import { displayAlert } from './alerts.js';
 
 export const getUser = async () => {
@@ -7,11 +8,12 @@ export const getUser = async () => {
 
   if (token) {
     try {
-      const api = getApi(token);
-      user = await api.User.current();
+      setToken(token);
+      user = await API.User.current();
     }
     catch (e) {
-      // Token expired, etc. Default API is tokenless, so no need to set it again.
+      // Token expired, etc.
+      setToken(null);
     }
   }
 
@@ -21,10 +23,9 @@ export const getUser = async () => {
 export const setUser = async ({ set }, user) => {
   const token = user?.token;
 
-  // This will return non-authenticated API if token is undefined
-  const api = getApi(token);
+  setToken(token);
   
-  await set({ api, user });
+  await set({ user });
 
   if (token) {
     window.localStorage.setItem('jwtToken', token);
@@ -37,10 +38,10 @@ export const setUser = async ({ set }, user) => {
 export const login = async ({ state, set, dispatch }) => {
   await set({ busy: true });
 
-  const { api, email, password } = state;
+  const { email, password } = state;
 
   try {
-    const user = await api.User.login(email, password);
+    const user = await API.User.login(email, password);
 
     // We don't reset busy flag after dispatching setUser
     // because the Login page component that dispatches this
@@ -71,13 +72,13 @@ export const logout = async ({ data, dispatch }) => {
 };
 
 export const register = async ({ data, state, set, dispatch }) => {
-  const { api, username, email, password } = state;
+  const { username, email, password } = state;
 
   try {
     // Prevent user interaction while the API call is being made
     await set({ busy: true });
 
-    const user = await api.User.register(username, email, password);
+    const user = await API.User.register(username, email, password);
 
     // We get here only after the new user record has been created on the server
     await dispatch(setUser, user);
@@ -99,12 +100,12 @@ export const register = async ({ data, state, set, dispatch }) => {
 };
 
 export const saveUserSettings = async ({ state, set, dispatch }) => {
-  const { api, image, username, bio, email, password } = state;
+  const { image, username, bio, email, password } = state;
 
   await set({ busy: true });
 
   try {
-    const user = await api.User.save({
+    const user = await API.User.save({
       image,
       username,
       bio,
@@ -114,7 +115,6 @@ export const saveUserSettings = async ({ state, set, dispatch }) => {
 
     // Update the user object upstream
     await dispatch(setUser, user);
-
     await set({ busy: false });
 
     await dispatch(displayAlert, {

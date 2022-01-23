@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Store, { useStore } from 'statium';
 
+import API from '../../api.js';
+
 import './Tags.css';
 
-export const loadTags = async ({ state, set }) => {
+export const loadTags = async ({ set }) => {
   await set({ loadingTags: true });
 
-  const { tags } = await state.api.Tags.all();
+  const { tags } = await API.Tags.all();
 
   await set({
     tags,
