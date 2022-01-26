@@ -8,7 +8,7 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "^4.0.3",
     "statium": "^1.0.4",
-    "urlito": "^0.2.0"
+    "urlito": "^1.0.2"
   },
   "devDependencies": {
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",

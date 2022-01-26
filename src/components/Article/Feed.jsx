@@ -61,10 +61,7 @@ const Feed = ({ tabs }) => {
   });
   
   return (
-    <Store tag="Feed view"
-      initialState={getStateFromUri}
-      onStateChange={({ state }) => setStateToUri(state)}
-    >
+    <Store tag="Feed view" initialState={getStateFromUri} onStateChange={setStateToUri}>
       <FeedView tabs={tabs} />
     </Store>
   );
